@@ -12,6 +12,10 @@
     min-width: 100px;
 }
 
+.product__rating {
+    display: flex;
+}
+
 .product__image {
     max-height: 100px;
     width: 100%;

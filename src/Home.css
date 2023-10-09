@@ -6,6 +6,10 @@
     max-width: 1500px;
 }
 
+.products {
+    display: flex;
+}
+
 .home__row {
     display: flex;
     z-index: 1;
@@ -17,5 +21,4 @@
     width: 100%;
     z-index: -1;
     margin-bottom: -150px;
-    mask-image: linear-gradient(black, transparent);
 }
