@@ -10,7 +10,7 @@ function Home() {
             alt=""/>
        </div>
 
-<div class="products">
+<div className="products">
        <div className="home__row">
         <Product
         id="1111"

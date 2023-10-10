@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link, useHistory } from "react-router-dom";
-import { auth } from './firebase';
+import { Link } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+const auth = getAuth();
 
-export default function Login() {
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const signIn = (e) => {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log(userCredential)
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
   return (
     <div className='login'>
@@ -18,10 +29,14 @@ export default function Login() {
             <h1>Sign In</h1>
             <form>
                 <h5>E-mail</h5>
-                <input type='text' value={email} onChange={e => setEmail(e.target.value)} />
+                <input type='email' value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                 placeholder='Enter your email' />
 
                 <h5>Password</h5>
-                <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
+                <input type='password' value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder='Enter your password' />
 
                 <button type='submit' className='login__signInButton'>Sign In</button>
             </form>
@@ -36,3 +51,5 @@ export default function Login() {
     </div>
   )
 };
+
+export default Login;

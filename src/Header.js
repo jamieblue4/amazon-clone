@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom";
 import { useStateValue } from './StateProvider';
 
+
 function Header() {
   const [{ cart }, dispatch] = useStateValue();
 
@@ -26,9 +27,9 @@ function Header() {
                 Hello, Guest
                </span>
                <span className="header__optionLineTwo">
-                <Link to="/Login">
-                Sign In
-                </Link>
+              <Link to="/Login">
+               Sign In
+               </Link>
                </span>
             </div>
 
@@ -61,6 +62,7 @@ function Header() {
         </div>
 
     </div>
+
   )
 }
 
