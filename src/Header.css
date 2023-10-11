@@ -65,7 +65,13 @@
     align-items: center;
 }
 
+.header__shoppingCart > NavLink {
+    text-decoration: none;
+    color: white;
+}
+
 .header__cartCount {
     margin-left: 10px;
     margin-right: 10px;
 }
+

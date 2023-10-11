@@ -2,18 +2,18 @@ import React from 'react';
 import './Header.css';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useStateValue } from './StateProvider';
 
 
 function Header() {
-  const [{ cart }, dispatch] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
 
   return (
     <div className="header">
-      <Link to="/">
+      <NavLink to="/">
         <img className="header__logo" alt="" src="http://pngimg.com/uploads/amazon/amazon_PNG11.png" />
-        </Link>
+        </NavLink>
 
         <div className="header__search">
             <input className="header__searchInput" type="text" />
@@ -27,9 +27,9 @@ function Header() {
                 Hello, Guest
                </span>
                <span className="header__optionLineTwo">
-              <Link to="/Login">
+              <NavLink to="/Login">
                Sign In
-               </Link>
+               </NavLink>
                </span>
             </div>
 
@@ -53,9 +53,9 @@ function Header() {
             </div>
 
             <div className="header__option">
-              <Link to="/Checkout">
+              <NavLink to="/Checkout">
               <ShoppingCartIcon className="header__shoppingCart" />
-              </Link>
+              </NavLink>
               <span className="header__optionLineTwo header__cartCount">{cart?.length}</span>
             </div>
 

@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-const auth = getAuth();
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {auth} from './firebase';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const Login = () => {
+   const naviage = useNavigate();
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
 
-    const signIn = (e) => {
-        e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential)
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
+   const onLogin = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        naviage("/home")
+        console.log(user);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage)
+    });
+   }
 
   return (
     <div className='login'>
@@ -38,14 +46,15 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Enter your password' />
 
-                <button type='submit' className='login__signInButton'>Sign In</button>
+                <button type='submit' onClick={onLogin} className='login__signInButton'>Sign In</button>
             </form>
 
             <p>
                 By signing in, you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, or Cookies Notice, and our Interest-Based Ads Notice.
             </p>
-
-            <button className='login__registerButton'>Create your Amazon Account</button>
+            <NavLink to="/signup">
+                <button className='login__registerButton'>Create your Amazon Account</button>
+            </NavLink>
         </div>
 
     </div>
