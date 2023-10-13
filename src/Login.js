@@ -1,30 +1,60 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-import {auth} from './firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from 'firebase/auth';
 import { NavLink, useNavigate } from 'react-router-dom';
+import {firebaseConfig} from './firebase';
 
-const Login = () => {
-   const naviage = useNavigate();
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
+function Login () {
+    
+    const auth = getAuth();
 
-   const onLogin = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        naviage("/home")
-        console.log(user);
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
-    });
-   }
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    if (!firebaseConfig) {
+        // Firebase config not loaded yet, return loading or null
+        return null;
+    }
+
+    const signIn = e => {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            navigate("/home")
+            console.log(user);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+       
+    }
+
+    const registerUser = async (e) => {
+        e.preventDefault();
+       
+        await createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+              // Signed in
+              const user = userCredential.user;
+              console.log(user);
+              navigate("/login")
+              // ...
+          })
+          .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              console.log(errorCode, errorMessage);
+              // ..
+
+            });
+   
 
   return (
     <div className='login'>
@@ -46,19 +76,20 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Enter your password' />
 
-                <button type='submit' onClick={onLogin} className='login__signInButton'>Sign In</button>
+                <button type='submit' onClick={signIn()} className='login__signInButton'>Sign In</button>
             </form>
 
             <p>
                 By signing in, you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, or Cookies Notice, and our Interest-Based Ads Notice.
             </p>
             <NavLink to="/signup">
-                <button className='login__registerButton'>Create your Amazon Account</button>
+                <button onClick={registerUser()} className='login__registerButton'>Create your Amazon Account</button>
             </NavLink>
         </div>
 
     </div>
   )
-};
+}
+}
 
 export default Login;
