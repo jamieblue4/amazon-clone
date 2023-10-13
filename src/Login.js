@@ -19,7 +19,7 @@ function Login () {
         return null;
     }
 
-    const signIn = e => {
+    const signIn = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -54,9 +54,10 @@ function Login () {
               // ..
 
             });
-   
+        }
 
   return (
+    <>
     <div className='login'>
         <Link to='/'>
             <img className='login__logo'
@@ -76,20 +77,21 @@ function Login () {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Enter your password' />
 
-                <button type='submit' onClick={signIn()} className='login__signInButton'>Sign In</button>
+                <button type='submit' onClick={(e) => signIn(e)} className='login__signInButton'>Sign In</button>
             </form>
 
             <p>
                 By signing in, you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, or Cookies Notice, and our Interest-Based Ads Notice.
             </p>
             <NavLink to="/signup">
-                <button onClick={registerUser()} className='login__registerButton'>Create your Amazon Account</button>
+                <button type='submit' onClick={(e) => registerUser(e)} className='login__registerButton'>Create your Amazon Account</button>
             </NavLink>
         </div>
 
     </div>
+    </>
   )
 }
-}
+
 
 export default Login;
