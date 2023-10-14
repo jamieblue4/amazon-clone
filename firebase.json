@@ -8,8 +8,8 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "src/App.js"
+        "source": "/src/",
+        "destination": "/src/App.js"
       }
     ]
   }
